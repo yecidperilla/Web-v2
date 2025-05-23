@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguridad Digital - Protección de Datos y Malware</title>
+    <style>
+        /* Estilos CSS */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
+            opacity: 0.2;
+            z-index: 0;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            animation: fadeInDown 1s ease;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            flex: 1 1 300px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .card:hover .card-img img {
+            transform: scale(1.1);
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            background: white;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 10px;
+            overflow: hidden;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--accent-color);
+            z-index: 1001;
+        }
+        
+        footer {
+            background: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .credits {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 1rem;
+        }
+        
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Protección de Acceso a Datos y Contra Malware</h1>
+            <p>Soluciones integrales para la seguridad digital de tu organización</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="main-content">
+            <!-- Tarjeta 1: Protección de Datos -->
+            <div class="card" onclick="openModal('modal1')">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Protección de Datos">
+                </div>
+                <div class="card-content">
+                    <h3>Protección de Acceso a Datos</h3>
+                    <p>Estrategias avanzadas para proteger la información sensible de accesos no autorizados.</p>
+                    <a href="#" class="btn">Más información</a>
+                </div>
+            </div>
+            
+            <!-- Tarjeta 2: Protección contra Malware -->
+            <div class="card" onclick="openModal('modal2')">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Protección contra Malware">
+                </div>
+                <div class="card-content">
+                    <h3>Protección contra Malware</h3>
+                    <p>Soluciones efectivas para prevenir, detectar y eliminar software malicioso.</p>
+                    <a href="#" class="btn">Más información</a>
+                </div>
+            </div>
+            
+            <!-- Tarjeta 3: Mejores Prácticas -->
+            <div class="card pulse" onclick="openModal('modal3')">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1560732488-6b0df240254a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Mejores Prácticas">
+                </div>
+                <div class="card-content">
+                    <h3>Mejores Prácticas</h3>
+                    <p>Guía completa con las mejores prácticas de seguridad digital para organizaciones.</p>
+                    <a href="#" class="btn">Más información</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modales de información -->
+    <!-- Modal 1: Protección de Datos -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal1')">&times;</span>
+            <div class="card-img">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Protección de Datos">
+            </div>
+            <div class="card-content">
+                <h2>Protección de Acceso a Datos</h2>
+                <p>La protección de acceso a datos es fundamental en la era digital para garantizar la confidencialidad, integridad y disponibilidad de la información.</p>
+                
+                <h3>Estrategias clave:</h3>
+                <ul>
+                    <li><strong>Autenticación multifactor (MFA):</strong> Requiere múltiples formas de verificación para acceder a sistemas sensibles.</li>
+                    <li><strong>Control de acceso basado en roles (RBAC):</strong> Limita el acceso según las responsabilidades de cada usuario.</li>
+                    <li><strong>Encriptación de datos:</strong> Protege la información tanto en tránsito como en reposo.</li>
+                    <li><strong>Monitoreo continuo:</strong> Detecta y alerta sobre accesos sospechosos en tiempo real.</li>
+                    <li><strong>Políticas de contraseñas robustas:</strong> Exige contraseñas complejas y cambios periódicos.</li>
+                </ul>
+                
+                <h3>Beneficios:</h3>
+                <ul>
+                    <li>Cumplimiento con regulaciones (GDPR, HIPAA, etc.)</li>
+                    <li>Reducción de riesgos de brechas de datos</li>
+                    <li>Protección de la reputación organizacional</li>
+                    <li>Mayor confianza de clientes y socios</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal 2: Protección contra Malware -->
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal2')">&times;</span>
+            <div class="card-img">
+                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Protección contra Malware">
+            </div>
+            <div class="card-content">
+                <h2>Protección contra Malware</h2>
+                <p>El malware representa una de las mayores amenazas para la seguridad digital, pudiendo causar daños irreparables a sistemas y datos.</p>
+                
+                <h3>Tipos comunes de malware:</h3>
+                <ul>
+                    <li><strong>Virus:</strong> Se replican infectando otros archivos.</li>
+                    <li><strong>Ransomware:</strong> Bloquea el acceso a sistemas hasta pagar un rescate.</li>
+                    <li><strong>Spyware:</strong> Recopila información sin consentimiento.</li>
+                    <li><strong>Troyanos:</strong> Se disfrazan de software legítimo.</li>
+                    <li><strong>Gusanos:</strong> Se propagan automáticamente por redes.</li>
+                </ul>
+                
+                <h3>Medidas de protección:</h3>
+                <ul>
+                    <li>Software antivirus/antimalware actualizado</li>
+                    <li>Firewalls de última generación</li>
+                    <li>Parches de seguridad regulares</li>
+                    <li>Educación del usuario sobre phishing</li>
+                    <li>Copias de seguridad automatizadas</li>
+                    <li>Segmentación de redes</li>
+                </ul>
+                
+                <h3>Estadísticas importantes:</h3>
+                <p>Según reportes recientes, un nuevo ataque de malware ocurre cada 39 segundos, y el 94% de estos ataques llegan por correo electrónico.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal 3: Mejores Prácticas -->
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal3')">&times;</span>
+            <div class="card-img">
+                <img src="https://images.unsplash.com/photo-1560732488-6b0df240254a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Mejores Prácticas">
+            </div>
+            <div class="card-content">
+                <h2>Mejores Prácticas de Seguridad Digital</h2>
+                <p>Implementar un enfoque integral es clave para proteger eficazmente los activos digitales de una organización.</p>
+                
+                <h3>Recomendaciones esenciales:</h3>
+                <ul>
+                    <li><strong>Evaluación de riesgos:</strong> Identificar activos críticos y vulnerabilidades.</li>
+                    <li><strong>Políticas de seguridad:</strong> Documentar y comunicar normas claras.</li>
+                    <li><strong>Capacitación continua:</strong> Formar empleados en conciencia de seguridad.</li>
+                    <li><strong>Plan de respuesta a incidentes:</strong> Preparar protocolos para posibles brechas.</li>
+                    <li><strong>Auditorías regulares:</strong> Evaluar periódicamente las medidas implementadas.</li>
+                </ul>
+                
+                <h3>Estrategia en capas:</h3>
+                <p>La seguridad efectiva requiere múltiples capas de protección:</p>
+                <ol>
+                    <li>Prevención (firewalls, filtros, controles de acceso)</li>
+                    <li>Detección (monitoreo, análisis de comportamiento)</li>
+                    <li>Respuesta (protocolos de contención y mitigación)</li>
+                    <li>Recuperación (backups, planes de continuidad)</li>
+                </ol>
+                
+                <h3>Tecnologías emergentes:</h3>
+                <p>Inteligencia Artificial para detección de anomalías, blockchain para integridad de datos, y autenticación biométrica para acceso seguro.</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Seguridad Digital - Todos los derechos reservados</p>
+            <div class="credits">
+                <p>Creado por: <strong>William Yecid Perilla</strong> - Personero 2025</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Funciones JavaScript para los modales
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Cerrar modal al hacer clic fuera del contenido
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        // Animación al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.animation = `fadeInUp 0.5s ease ${index * 0.2}s forwards`;
+                card.style.opacity = '0';
+            });
+        });
+    </script>
+</body>
+</html>
